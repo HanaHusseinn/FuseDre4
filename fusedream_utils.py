@@ -168,6 +168,7 @@ class FuseDreamBaseGenerator():
         self.interp_mode = interp_mode 
   
     def generate_basis(self, text, init_iters=500, num_basis=5):
+        print("BASIS_first_line")
         text_tok = clip.tokenize([text]).to(self.device)
         clip_c = self.clip_model.logit_scale.exp() 
 
