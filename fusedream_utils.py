@@ -213,8 +213,8 @@ class FuseDreamBaseGenerator():
                 y_init = y_init[indices]
                 score_init = score_init[indices]
                 
-                print("z_init all")
-                print(z_init)
+                #print("z_init all")
+                #print(z_init)
                 print("y_init all")
                 print(y_init)
                 print("score_init all")
@@ -224,8 +224,8 @@ class FuseDreamBaseGenerator():
                 y_init = y_init[:num_basis]
                 score_init = score_init[:num_basis]
                 
-                print("z_init")
-                print(z_init)
+                #print("z_init")
+                #print(z_init)
                 print("y_init")
                 print(y_init)
                 print("score_init")
