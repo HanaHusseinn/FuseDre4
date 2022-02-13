@@ -1073,7 +1073,10 @@ class Distribution(torch.Tensor):
     if self.dist_type == 'normal':
       self.normal_(self.mean, self.var)
     elif self.dist_type == 'categorical':
-      self.random_(0, self.num_categories)    
+      self.random_(0, self.num_categories)
+      trial1= self.random_(0, self.num_categories)
+      trial2= self.random_(0, self.num_categories)
+      return trial1,trial2
     # return self.variable
     
   # Silly hack: overwrite the to() method to wrap the new object
