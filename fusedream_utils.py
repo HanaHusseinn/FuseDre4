@@ -170,7 +170,11 @@ class FuseDreamBaseGenerator():
     def generate_basis(self, text, init_iters=500, num_basis=5):
         print("BASIS_first_line")
         text_tok = clip.tokenize([text]).to(self.device)
+        print("finish texttok and it is:")
+        print(text_tok)
         clip_c = self.clip_model.logit_scale.exp() 
+        print("finish clip_c and it is:")
+        print(clip_c)
 
         z_init_cllt = []
         y_init_cllt = []
@@ -180,7 +184,11 @@ class FuseDreamBaseGenerator():
         with torch.no_grad():
             for i in tqdm(range(init_iters)):
                 self.z_.sample_()
-                self.y_.sample_()
+                sampleembedding1,sampleembedding2=self.y_.sample_()
+                print("sample_emb1")
+                print(sampleembedding1)
+                print("sample_emb2")
+                print(sampleembedding2)
 
                 self.z_.data = torch.clamp(self.z_.data.detach().clone(), min=-Z_THRES, max=Z_THRES)
 
@@ -204,9 +212,25 @@ class FuseDreamBaseGenerator():
                 z_init = z_init[indices]
                 y_init = y_init[indices]
                 score_init = score_init[indices]
+                
+                print("z_init all")
+                print(z_init)
+                print("y_init all")
+                print(y_init)
+                print("score_init all")
+                print(score_init)
+                
                 z_init = z_init[:num_basis]
                 y_init = y_init[:num_basis]
                 score_init = score_init[:num_basis]
+                
+                print("z_init")
+                print(z_init)
+                print("y_init")
+                print(y_init)
+                print("score_init")
+                print(score_init)
+                
         
         #save_image(self.G(z_init, self.G.shared(y_init)), 'samples/init_%s.png'%text, 1)
 
