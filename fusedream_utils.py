@@ -526,7 +526,7 @@ class FuseDreamBaseGenerator():
                     countIter=len(endIndexNoun)
                     import random
                     y_init_counter=0 #for non -1 and non existent nouns
-                    for iter in countIter:
+                    for iter in range (countIter):
                         if (endIndexNoun[iter]!=-1):
                             #case1:normal array [2,5] of 2 nouns found in imagenet
                             #start is 0 for first element else from previous element
