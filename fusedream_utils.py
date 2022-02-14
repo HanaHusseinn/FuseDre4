@@ -167,7 +167,7 @@ class FuseDreamBaseGenerator():
 
         self.interp_mode = interp_mode 
   
-    def generate_basis(self, text, init_iters=500, num_basis=5,nounsArrImageNet,endIndexNoun):
+    def generate_basis(self, text, init_iters=500, num_basis=5):
         
         #restriction to have basis> no. of nouns
         
