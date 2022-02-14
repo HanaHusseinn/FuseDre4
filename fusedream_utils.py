@@ -217,7 +217,7 @@ class FuseDreamBaseGenerator():
                     import random
                     y_init_counter=0 #for non -1 and non existent nouns
                     for iter in countIter:
-                        if (endArr[iter]!=-1):
+                        if (endIndexNoun[iter]!=-1):
                             #case1:normal array [2,5] of 2 nouns found in imagenet
                             #start is 0 for first element else from previous element
                             #also works for noun doesn't exist in ImageNet in the middle so repetitive end as last time
@@ -226,11 +226,11 @@ class FuseDreamBaseGenerator():
                                 y_init[num_basis-1-y_init_counter]=random.choice(nounsArrImageNet[0:endIndexNoun[iter]])
                                 y_init_counter=y_init_counter+1
                             else:
-                                y_init[num_basis+y_init_counter]=random.choice(nounsArrImageNet[endArr[iter-1],endIndexNoun[iter]])
+                                y_init[num_basis+y_init_counter]=random.choice(nounsArrImageNet[endIndexNoun[iter-1],endIndexNoun[iter]])
                                 y_init_counter=y_init_counter+1
                                 
                             #case2: noun doesn't exist in ImageNet in the beginning so -1, so begin at 0
-                            if (iter!=0 && end[iter-1]==-1):
+                            if (iter!=0 and endIndexNoun[iter-1]==-1):
                                 y_init[num_basis+y_init_counter]=random.choice(nounsArrImageNet[0,endIndexNoun[iter]])
                                 y_init_counter=y_init_counter+1
 
