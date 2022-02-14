@@ -535,7 +535,7 @@ class FuseDreamBaseGenerator():
                             if (iter==0):
                                 if(endIndexNoun[iter]==0):
                                     y_init[num_basis-1-y_init_counter]=random.choice(nounsArrImageNet[0])
-                                elif: 
+                                else: 
                                     y_init[num_basis-1-y_init_counter]=random.choice(nounsArrImageNet[0:endIndexNoun[iter]])
                                 y_init_counter=y_init_counter+1
                                 
@@ -549,7 +549,7 @@ class FuseDreamBaseGenerator():
                             elif (iter!=0 and endIndexNoun[iter-1]==-1):
                                 if(endIndexNoun[iter]==0):
                                     y_init[num_basis-1-y_init_counter]=random.choice(nounsArrImageNet[0])
-                                elif:
+                                else:
                                     y_init[num_basis-1-y_init_counter]=random.choice(nounsArrImageNet[0:endIndexNoun[iter]])
                                 y_init_counter=y_init_counter+1
 
