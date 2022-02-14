@@ -460,7 +460,7 @@ class FuseDreamBaseGenerator():
         nltk.download('punkt')
         nltk.download('averaged_perceptron_tagger')
         
-        lines = SENTENCE
+        lines = text
         # function to test if something is a noun
         is_noun = lambda pos: pos[:2] == 'NN'
         # do the nlp stuff
