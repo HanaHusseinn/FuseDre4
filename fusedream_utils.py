@@ -167,7 +167,10 @@ class FuseDreamBaseGenerator():
 
         self.interp_mode = interp_mode 
   
-    def generate_basis(self, text, init_iters=500, num_basis=5):
+    def generate_basis(self, text, init_iters=500, num_basis=5,nounsArrImageNet,endIndexNoun):
+        
+        #restriction to have basis> no. of nouns
+        
         print("BASIS_first_line")
         text_tok = clip.tokenize([text]).to(self.device)
         print("finish texttok and it is:")
@@ -175,7 +178,9 @@ class FuseDreamBaseGenerator():
         clip_c = self.clip_model.logit_scale.exp() 
         print("finish clip_c and it is:")
         print(clip_c)
-
+       
+        
+        
         z_init_cllt = []
         y_init_cllt = []
         z_init = None
@@ -188,7 +193,7 @@ class FuseDreamBaseGenerator():
                 print("sample_emb1")
                 print(sampleembedding1)
                 print("sample_emb2")
-                print(sampleembedding2)
+                print(sampleembedding2)                
 
                 self.z_.data = torch.clamp(self.z_.data.detach().clone(), min=-Z_THRES, max=Z_THRES)
 
@@ -201,8 +206,35 @@ class FuseDreamBaseGenerator():
                 logits_per_image = logits_per_image/clip_c
                 if z_init is None:
                     z_init = self.z_.data.detach().clone()
-                    y_init = self.y_.data.detach().clone()
+                    y_init = self.y_.data.detach().clone()   #will change this one
                     score_init = logits_per_image.squeeze()
+                    
+                    #new commit to replace low score with nouns from the text to make faster iterations to reach the image
+                    #only in first iteration
+                    sorted, indices = torch.sort(score_init, descending=True)
+                    y_init = y_init[indices]
+                    countIter=len(endIndexNoun)
+                    import random
+                    y_init_counter=0 #for non -1 and non existent nouns
+                    for iter in countIter:
+                        if (endArr[iter]!=-1):
+                            #case1:normal array [2,5] of 2 nouns found in imagenet
+                            #start is 0 for first element else from previous element
+                            #also works for noun doesn't exist in ImageNet in the middle so repetitive end as last time
+                            #nouns:blue, photo(which is not found), dog : [2,2,5]
+                            if (iter==0):
+                                y_init[num_basis-1-y_init_counter]=random.choice(nounsArrImageNet[0:endIndexNoun[iter]])
+                                y_init_counter=y_init_counter+1
+                            else:
+                                y_init[num_basis+y_init_counter]=random.choice(nounsArrImageNet[endArr[iter-1],endIndexNoun[iter]])
+                                y_init_counter=y_init_counter+1
+                                
+                            #case2: noun doesn't exist in ImageNet in the beginning so -1, so begin at 0
+                            if (iter!=0 && end[iter-1]==-1):
+                                y_init[num_basis+y_init_counter]=random.choice(nounsArrImageNet[0,endIndexNoun[iter]])
+                                y_init_counter=y_init_counter+1
+
+
                 else:
                     z_init = torch.cat([z_init, self.z_.data.detach().clone()], dim=0)
                     y_init = torch.cat([y_init, self.y_.data.detach().clone()], dim=0)
