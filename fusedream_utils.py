@@ -475,7 +475,7 @@ class FuseDreamBaseGenerator():
             for i,val in enumerate(imageNet):
                 if (f(val,noun)):
                     nounsArrImageNet.append(i)
-                    endIndexNoun.append(len(nounArrImageNet)-1)
+                    endIndexNoun.append(len(nounsArrImageNet)-1)
         print(nounsArrImageNet)
         print(endIndexNoun)
 
