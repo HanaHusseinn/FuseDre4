@@ -535,10 +535,11 @@ class FuseDreamBaseGenerator():
                             if (iter==0):
                                 y_init[num_basis-1-y_init_counter]=random.choice(nounsArrImageNet[0:endIndexNoun[iter]])
                                 y_init_counter=y_init_counter+1
+                                
                             #case2: not first element, and elemnts before it is normal different number(the current noun has classes in ImageNet)
                             #or: not first element, and elements before it is the same number(the current noun doesn't have class in ImageNet)
-                            elif (iter!=0 and endIndexNoun[iter-1]!=-1):
-                                y_init[num_basis+y_init_counter]=random.choice(nounsArrImageNet[endIndexNoun[iter-1]:endIndexNoun[iter]])
+                            elif (iter!=0 and endIndexNoun[iter-1]!=-1 and endIndexNoun[iter-1]!=endIndexNoun[iter] ):
+                                y_init[num_basis+y_init_counter]=random.choice(nounsArrImageNet[endIndexNoun[iter-1]+1:endIndexNoun[iter]])
                                 y_init_counter=y_init_counter+1
                                 
                             #case3: not the first element, and the noun doesn't exist in ImageNet in the beginning so -1, so begin at 0
